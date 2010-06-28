@@ -18,11 +18,19 @@ class TestRoflbot < Test::Unit::TestCase
     roflbot.wait
   end
 
-  def test_expect
+  def test_responds_with_string
     roflbot = Roflbot.new("roflbot", "password")
     roflbot.expects(/^hey$/).responds("oh hai")
 
     @buddy.expects(:send_im).with("oh hai")
+    receive_im("hey")
+  end
+
+  def test_responds_with_block
+    roflbot = Roflbot.new("roflbot", "password")
+    roflbot.expects(/^hey$/).responds { "omg wtf" }
+
+    @buddy.expects(:send_im).with("omg wtf")
     receive_im("hey")
   end
 end

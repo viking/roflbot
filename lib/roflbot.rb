@@ -14,8 +14,12 @@ class Roflbot
       @regexp =~ message
     end
 
-    def responds(message)
-      @response = message
+    def responds(message = nil, &block)
+      if block_given?
+        @response = block
+      else
+        @response = message
+      end
     end
   end
 
@@ -41,7 +45,12 @@ class Roflbot
   def on_im(message, buddy, auto_response)
     @expectations.each do |expectation|
       next  if !expectation.matches?(message)
-      buddy.send_im(expectation.response)
+      case expectation.response
+      when Proc
+        buddy.send_im(expectation.response.call)
+      when String
+        buddy.send_im(expectation.response)
+      end
       break
     end
   end
