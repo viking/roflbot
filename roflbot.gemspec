@@ -10,21 +10,31 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jeremy Stephens"]
   s.date = %q{2010-06-29}
+  s.default_executable = %q{roflbot}
   s.description = %q{roflbot is a simple AIM bot, yo}
   s.email = %q{viking415@gmail.com}
+  s.executables = ["roflbot"]
   s.extra_rdoc_files = [
     "LICENSE",
      "README"
   ]
   s.files = [
-    "README",
+    ".gitignore",
+     "LICENSE",
+     "README",
      "Rakefile",
+     "VERSION",
+     "bin/roflbot",
      "lib/roflbot.rb",
      "lib/roflbot/base.rb",
+     "lib/roflbot/runner.rb",
      "lib/roflbot/sentence.tt",
      "lib/roflbot/sentence_bot.rb",
+     "roflbot.gemspec",
+     "test/fixtures/bogus.yml",
      "test/helper.rb",
      "test/roflbot/test_base.rb",
+     "test/roflbot/test_runner.rb",
      "test/roflbot/test_sentence_bot.rb"
   ]
   s.homepage = %q{http://github.com/viking/roflbot}
@@ -35,6 +45,7 @@ Gem::Specification.new do |s|
   s.test_files = [
     "test/helper.rb",
      "test/roflbot/test_sentence_bot.rb",
+     "test/roflbot/test_runner.rb",
      "test/roflbot/test_base.rb"
   ]
 

@@ -1,4 +1,6 @@
 require 'forwardable'
+require 'optparse'
+require 'yaml'
 require 'rubygems'
 require 'net/toc'
 require 'treetop'
@@ -8,3 +10,4 @@ end
 
 require File.dirname(__FILE__) + "/roflbot/base"
 require File.dirname(__FILE__) + "/roflbot/sentence_bot"
+require File.dirname(__FILE__) + "/roflbot/runner"

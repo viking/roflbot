@@ -22,4 +22,8 @@ class Test::Unit::TestCase
   def receive_im(message, auto = false)
     @client.on_im_block.call(message, @buddy, auto)
   end
+
+  def fixture_filename(name)
+    File.dirname(__FILE__) + "/fixtures/#{name}"
+  end
 end
