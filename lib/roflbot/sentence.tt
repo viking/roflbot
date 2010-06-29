@@ -1,0 +1,42 @@
+grammar Sentence
+  rule phrase
+    token* {
+      def to_s(env = {})
+        elements.collect { |x| x.to_s(env) }.join
+      end
+    }
+  end
+
+  rule token
+    literal / variable
+  end
+
+  rule literal
+    (space / word / punctuation) {
+      def to_s(env = {})
+        text_value
+      end
+    }
+  end
+
+  rule variable
+    "(" word ")" {
+      def to_s(env = {})
+        arr = env[word.text_value]
+        arr[rand(arr.length)]
+      end
+    }
+  end
+
+  rule space
+    ' '+
+  end
+
+  rule word
+    [a-zA-Z0-9]+
+  end
+
+  rule punctuation
+    [,.!?]
+  end
+end

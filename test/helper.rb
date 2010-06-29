@@ -2,6 +2,7 @@ require 'test/unit'
 require 'rubygems'
 require 'mocha'
 require 'delegate'
+require 'ruby-debug'
 require File.dirname(__FILE__) + "/../lib/roflbot"
 
 class FakeClient < Mocha::Mock
