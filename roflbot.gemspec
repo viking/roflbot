@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{roflbot}
-  s.version = "0.0.0"
+  s.version = "0.0.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jeremy Stephens"]
-  s.date = %q{2010-06-29}
+  s.date = %q{2010-06-30}
   s.default_executable = %q{roflbot}
   s.description = %q{roflbot is a simple AIM bot, yo}
   s.email = %q{viking415@gmail.com}

@@ -13,10 +13,10 @@ module Roflbot
         "ending" => ["sup?", "I love you."]
       })
 
-      @buddy.expects(:send_im).times(20).with do |message|
+      @buddy.expects(:send_im).times(100).with do |message|
         message =~ /^Hey (dude|guy), (sup\?|I love you.)$/
       end
-      20.times { |_| receive_im("hey") }
+      100.times { |_| receive_im("hey") }
     end
   end
 end

@@ -12,11 +12,7 @@ grammar Sentence
   end
 
   rule literal
-    (space / word / punctuation) {
-      def to_s(env = {})
-        text_value
-      end
-    }
+    space / word / punctuation
   end
 
   rule variable
@@ -29,14 +25,26 @@ grammar Sentence
   end
 
   rule space
-    ' '+
+    ' '+ {
+      def to_s(env = {})
+        text_value
+      end
+    }
   end
 
   rule word
-    [a-zA-Z0-9]+
+    [a-zA-Z0-9]+ {
+      def to_s(env = {})
+        text_value
+      end
+    }
   end
 
   rule punctuation
-    [,.!?]
+    [,.!?] {
+      def to_s(env = {})
+        text_value
+      end
+    }
   end
 end
