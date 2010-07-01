@@ -4,6 +4,7 @@ require 'yaml'
 require 'rubygems'
 require 'net/toc'
 require 'treetop'
+require 'twitter'
 
 module Roflbot
 end

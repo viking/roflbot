@@ -6,7 +6,7 @@ module Roflbot
       super
       parser = SentenceParser.new
       @sentences = []
-      @options.delete("sentences").each do |sentence|
+      @options["sentences"].each do |sentence|
         node = parser.parse(sentence)
         @sentences << node
       end

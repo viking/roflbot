@@ -21,19 +21,38 @@ module Roflbot
     end
 
     extend Forwardable
-    def initialize(username, password, options = {})
-      @username = username
-      @password = password
+    TWITTER = { :token => "7rfuoIhSGN7OQVvDLzJrcg", :secret => "I2o4SmRWVV4Yo7XhGgLrKGJq1KgpC8VrluyA9LLuH0" }
+
+    attr_reader :options
+    def initialize(options = {})
       @options = options
       @expectations = []
+      accounts = @options["accounts"]
 
-      @client = Net::TOC.new(@username, @password)
-      @client.on_im { |m, b, a| on_im(m, b, a) }
+      @aim = Net::TOC.new(*accounts["AIM"].values_at("username", "password"))
+      @aim.on_im { |m, b, a| on_im(m, b, a) }
+
+      oauth = Twitter::OAuth.new(TWITTER[:token], TWITTER[:secret])
+      oauth.authorize_from_access(*accounts["Twitter"].values_at("token", "secret"))
+      @twitter = Twitter::Base.new(oauth)
+      @since_id = accounts['Twitter']['since_id']
     end
 
-    def_delegator :@client, :connect
-    def_delegator :@client, :disconnect
-    def_delegator :@client, :wait
+    def_delegator :@aim, :disconnect
+
+    def start
+      @aim.connect
+      @thread = Thread.new { loop { respond_via_twitter; sleep 60 } }
+    end
+
+    def wait
+      @aim.wait
+    end
+
+    def stop
+      @aim.disconnect
+      @thread.kill  if @thread
+    end
 
     def expects(regexp)
       exp = Expectation.new(regexp)
@@ -51,6 +70,30 @@ module Roflbot
           buddy.send_im(expectation.response)
         end
         break
+      end
+    end
+
+    def respond_via_twitter
+      mentions = @twitter.mentions(@since_id ? {:since_id => @since_id} : {})
+      if !mentions.empty?
+        @since_id = mentions[-1].id
+        @options['accounts']['Twitter']['since_id'] = @since_id
+      end
+
+      mentions.each do |tweet|
+        @expectations.each do |expectation|
+          # throw away beginning mention
+          message = tweet.text.sub(/^@[^\s]+\s+/, "")
+
+          next  if !expectation.matches?(message)
+          case expectation.response
+          when Proc
+            @twitter.update("@#{tweet.user.screen_name} #{expectation.response.call}")
+          when String
+            @twitter.update("@#{tweet.user.screen_name} #{expectation.response}")
+          end
+          break
+        end
       end
     end
   end

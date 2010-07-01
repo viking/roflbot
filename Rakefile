@@ -5,13 +5,14 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "roflbot"
-    gem.summary = %Q{roflbot is a simple AIM bot}
-    gem.description = %Q{roflbot is a simple AIM bot, yo}
+    gem.summary = %Q{roflbot is a bot that says stuff on AIM and Twitter}
+    gem.description = %Q{roflbot will make you a rofl waffle}
     gem.email = "viking415@gmail.com"
     gem.homepage = "http://github.com/viking/roflbot"
     gem.authors = ["Jeremy Stephens"]
     gem.add_dependency "net-toc"
     gem.add_dependency "treetop"
+    gem.add_dependency "twitter"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new
