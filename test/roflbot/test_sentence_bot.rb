@@ -22,10 +22,20 @@ module Roflbot
     def test_responses
       bot = SentenceBot.new(@options)
 
-      @buddy.expects(:send_im).times(100).with do |message|
+      @buddy.expects(:send_im).times(20).with do |message|
         message =~ /^Hey (dude|guy), (sup\?|I love you.)$/
       end
-      100.times { |_| receive_im("hey") }
+      20.times { |_| receive_im("hey") }
+    end
+
+    def test_parses_quotes
+      @options["sentences"] = ["You're awesome (noun), (ending)"]
+      bot = SentenceBot.new(@options)
+
+      @buddy.expects(:send_im).times(20).with do |message|
+        message =~ /^You're awesome (dude|guy), (sup\?|I love you.)$/
+      end
+      20.times { |_| receive_im("hey") }
     end
   end
 end

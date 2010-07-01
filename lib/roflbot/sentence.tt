@@ -33,7 +33,7 @@ grammar Sentence
   end
 
   rule word
-    [a-zA-Z0-9]+ {
+    [a-zA-Z0-9']+ {
       def to_s(env = {})
         text_value
       end
