@@ -74,7 +74,11 @@ module Roflbot
     end
 
     def respond_via_twitter
-      mentions = @twitter.mentions(@since_id ? {:since_id => @since_id} : {})
+      begin
+        mentions = @twitter.mentions(@since_id ? {:since_id => @since_id} : {})
+      rescue StandardError
+        mentions = []
+      end
       if !mentions.empty?
         @since_id = mentions[-1].id
         @options['accounts']['Twitter']['since_id'] = @since_id
@@ -86,12 +90,15 @@ module Roflbot
           message = tweet.text.sub(/^@[^\s]+\s+/, "")
 
           next  if !expectation.matches?(message)
-          case expectation.response
-          when Proc
-            @twitter.update("@#{tweet.user.screen_name} #{expectation.response.call}")
-          when String
-            @twitter.update("@#{tweet.user.screen_name} #{expectation.response}")
-          end
+
+          status =
+            case expectation.response
+            when Proc
+              "@#{tweet.user.screen_name} #{expectation.response.call}"
+            when String
+              "@#{tweet.user.screen_name} #{expectation.response}"
+            end
+          @twitter.update(status, :in_reply_to_status_id => tweet.id)
           break
         end
       end

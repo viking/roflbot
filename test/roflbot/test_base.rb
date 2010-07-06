@@ -52,13 +52,21 @@ module Roflbot
 
       seq = sequence("foo")
       @twitter.expects(:mentions).returns([fake_tweet("hey", 12345)]).in_sequence(seq)
-      @twitter.expects(:update).with("@dudeguy oh hai").in_sequence(seq)
+      @twitter.expects(:update).with("@dudeguy oh hai", :in_reply_to_status_id => 12345).in_sequence(seq)
       roflbot.respond_via_twitter
 
       seq = sequence("bar")
       @twitter.expects(:mentions).with(:since_id => 12345).returns([fake_tweet("hey", 23456)]).in_sequence(seq)
-      @twitter.expects(:update).with("@dudeguy oh hai").in_sequence(seq)
+      @twitter.expects(:update).with("@dudeguy oh hai", :in_reply_to_status_id => 23456).in_sequence(seq)
       roflbot.respond_via_twitter
+    end
+
+    def test_handles_twitter_exceptions
+      roflbot = Base.new(@options)
+      roflbot.expects(/^hey$/).responds("oh hai")
+
+      @twitter.expects(:mentions).raises(Twitter::TwitterError, 'foo')
+      assert_nothing_raised { roflbot.respond_via_twitter }
     end
 
     def test_saves_since_id
@@ -67,7 +75,7 @@ module Roflbot
 
       seq = sequence("foo")
       @twitter.expects(:mentions).returns([fake_tweet("hey", 12345)]).in_sequence(seq)
-      @twitter.expects(:update).with("@dudeguy oh hai").in_sequence(seq)
+      @twitter.expects(:update).with("@dudeguy oh hai", kind_of(Hash)).in_sequence(seq)
       roflbot.respond_via_twitter
 
       assert_equal 12345, roflbot.options['accounts']['Twitter']['since_id']
@@ -80,7 +88,7 @@ module Roflbot
 
       seq = sequence("foo")
       @twitter.expects(:mentions).with(:since_id => 1337).returns([fake_tweet("hey", 12345)]).in_sequence(seq)
-      @twitter.expects(:update).with("@dudeguy oh hai").in_sequence(seq)
+      @twitter.expects(:update).with("@dudeguy oh hai", kind_of(Hash)).in_sequence(seq)
       roflbot.respond_via_twitter
     end
 
