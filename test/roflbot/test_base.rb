@@ -20,6 +20,13 @@ module Roflbot
       roflbot = Base.new(@options)
     end
 
+    def test_new_with_gvoice
+      conf = stub("gvoice config")
+      @options['accounts']['Google Voice'] = conf
+      GvoiceRuby::Client.expects(:new).with(conf).returns(@gvoice)
+      roflbot = Base.new(@options)
+    end
+
     def test_start
       roflbot = Base.new(@options)
       @client.expects(:connect)
@@ -98,6 +105,23 @@ module Roflbot
 
       @buddy.expects(:send_im).with("omg wtf")
       receive_im("hey")
+    end
+
+    def test_respond_via_sms_with_string
+      conf = stub("gvoice config")
+      @options['accounts']['Google Voice'] = conf
+      roflbot = Base.new(@options)
+      roflbot.expects(/^hey$/).responds { "omg wtf" }
+
+      seq = sequence("foo")
+      @gvoice.expects(:check).in_sequence(seq)
+      @gvoice.expects(:any_unread?).returns(true).in_sequence(seq)
+      @gvoice.expects(:smss).returns([fake_sms("hey")]).in_sequence(seq)
+      @gvoice.expects(:send_sms).with({
+        :phone_number => "+16158675309",
+        :text => "omg wtf",
+      }).in_sequence(seq)
+      roflbot.respond_via_sms
     end
   end
 end

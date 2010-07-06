@@ -5,6 +5,7 @@ require 'rubygems'
 require 'net/toc'
 require 'treetop'
 require 'twitter'
+require File.dirname(__FILE__) + "/../vendor/gvoice-ruby/lib/gvoice-ruby"
 
 module Roflbot
 end

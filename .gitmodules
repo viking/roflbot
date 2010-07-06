@@ -1,0 +1,3 @@
+[submodule "vendor/gvoice-ruby"]
+	path = vendor/gvoice-ruby
+	url = git://github.com/kgautreaux/gvoice-ruby.git

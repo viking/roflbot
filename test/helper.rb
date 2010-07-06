@@ -23,6 +23,8 @@ class Test::Unit::TestCase
     @twitter = stub("Twitter", :mentions => [])
     Twitter::OAuth.stubs(:new).returns(@oauth)
     Twitter::Base.stubs(:new).returns(@twitter)
+    @gvoice = stub("Gvoice", :smss => [])
+    GvoiceRuby::Client.stubs(:new).returns(@gvoice)
   end
 
   def receive_im(message, auto = false)
@@ -31,6 +33,14 @@ class Test::Unit::TestCase
 
   def fake_tweet(message, id)
     Hashie::Mash.new("user" => { "screen_name" => "dudeguy" }, "text" => "@roflbot #{message}", "id" => id)
+  end
+
+  def fake_sms(message)
+    stub("SMS", {
+      :text => message,
+      :from => "+16158675309",
+      :labels => %w{unread}
+    })
   end
 
   def fixture_filename(name)
