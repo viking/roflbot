@@ -10,6 +10,7 @@ begin
     gem.email = "viking415@gmail.com"
     gem.homepage = "http://github.com/viking/roflbot"
     gem.authors = ["Jeremy Stephens"]
+    gem.files.include("vendor/**/*")
     gem.add_dependency "net-toc"
     gem.add_dependency "treetop"
     gem.add_dependency "twitter"
