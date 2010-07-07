@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{roflbot}
-  s.version = "0.0.5"
+  s.version = "0.0.6"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jeremy Stephens"]
-  s.date = %q{2010-07-06}
+  s.date = %q{2010-07-07}
   s.default_executable = %q{roflbot}
   s.description = %q{roflbot will make you a rofl waffle}
   s.email = %q{viking415@gmail.com}
@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
   ]
   s.files = [
     ".gitignore",
+     ".gitmodules",
      "LICENSE",
      "README",
      "Rakefile",
@@ -35,7 +36,34 @@ Gem::Specification.new do |s|
      "test/helper.rb",
      "test/roflbot/test_base.rb",
      "test/roflbot/test_runner.rb",
-     "test/roflbot/test_sentence_bot.rb"
+     "test/roflbot/test_sentence_bot.rb",
+     "vendor/gvoice-ruby/Gemfile",
+     "vendor/gvoice-ruby/README.rdoc",
+     "vendor/gvoice-ruby/Rakefile",
+     "vendor/gvoice-ruby/VERSION",
+     "vendor/gvoice-ruby/bin/gv-notifier",
+     "vendor/gvoice-ruby/bin/gv-place-call",
+     "vendor/gvoice-ruby/bin/gv-send-sms",
+     "vendor/gvoice-ruby/config/gvoice-ruby-config.yml.sample",
+     "vendor/gvoice-ruby/lib/gvoice-ruby.rb",
+     "vendor/gvoice-ruby/lib/gvoice-ruby/call.rb",
+     "vendor/gvoice-ruby/lib/gvoice-ruby/client.rb",
+     "vendor/gvoice-ruby/lib/gvoice-ruby/compatibility.rb",
+     "vendor/gvoice-ruby/lib/gvoice-ruby/config.rb",
+     "vendor/gvoice-ruby/lib/gvoice-ruby/inbox_parser.rb",
+     "vendor/gvoice-ruby/lib/gvoice-ruby/sms.rb",
+     "vendor/gvoice-ruby/lib/gvoice-ruby/user.rb",
+     "vendor/gvoice-ruby/lib/gvoice-ruby/voicemail.rb",
+     "vendor/gvoice-ruby/test/client_test.rb",
+     "vendor/gvoice-ruby/test/config_test.rb",
+     "vendor/gvoice-ruby/test/fixtures/config_fixture.yml",
+     "vendor/gvoice-ruby/test/fixtures/inbox.json",
+     "vendor/gvoice-ruby/test/fixtures/inbox.yml",
+     "vendor/gvoice-ruby/test/fixtures/inbox_fixture.html",
+     "vendor/gvoice-ruby/test/fixtures/login_fixture.html",
+     "vendor/gvoice-ruby/test/gvoice-ruby_test.rb",
+     "vendor/gvoice-ruby/test/inbox_parser_test.rb",
+     "vendor/gvoice-ruby/test/test_helper.rb"
   ]
   s.homepage = %q{http://github.com/viking/roflbot}
   s.rdoc_options = ["--charset=UTF-8"]
