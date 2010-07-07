@@ -14,6 +14,9 @@ begin
     gem.add_dependency "net-toc"
     gem.add_dependency "treetop"
     gem.add_dependency "twitter"
+    gem.add_dependency "curb"
+    gem.add_dependency "nokogiri"
+    gem.add_dependency "json"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new
